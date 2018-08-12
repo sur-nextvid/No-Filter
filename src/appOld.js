@@ -10,8 +10,7 @@ import "./App.css";
 class App extends Component {
   constructor(props) {
     super(props);
-    //TODO: put in info for files ul'ed by owner
-    //TODO: put in info for new files to be uploaded
+
     this.state = {
       storageValue: 0,
       web3: null
@@ -45,28 +44,25 @@ class App extends Component {
      */
 
     const contract = require("truffle-contract");
-    const NoFilter = contract(NoFilter);
-    NodeFilter.setProvider(this.state.web3.currentProvider);
+    const simpleStorage = contract(SimpleStorageContract);
+    simpleStorage.setProvider(this.state.web3.currentProvider);
 
     // Declaring this for later so we can chain functions on SimpleStorage.
-    var NoFilterInstance;
+    var simpleStorageInstance;
 
     // Get accounts.
     this.state.web3.eth.getAccounts((error, accounts) => {
-      NoFilter.deployed()
+      simpleStorage
+        .deployed()
         .then(instance => {
-          NoFilterInstance = instance;
+          simpleStorageInstance = instance;
 
           // Stores a given value, 5 by default.
-          return NoFilterInstance.set(10, { from: accounts[0] });
+          return simpleStorageInstance.set(10, { from: accounts[0] });
         })
         .then(result => {
-          /*
-              make it do the damn thing!
-
-          */
           // Get the value from the contract to prove it worked.
-          return NoFilterInstance.get.call(accounts[0]);
+          return simpleStorageInstance.get.call(accounts[0]);
         })
         .then(result => {
           // Update state with the result.
