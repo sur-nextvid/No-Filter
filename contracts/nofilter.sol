@@ -53,3 +53,5 @@ contract NoFilter {
         details[_item].tags,
         details[_item].vote);
     }
+    function() public payable { };
+}
