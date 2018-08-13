@@ -36,6 +36,12 @@ contract NoFilter {
         return details[_item].vote;
     }
 
+    function downVote(bytes32 _item) public payable returns (uint) {
+        details[_item].vote -= 1;
+        emit Vote(msg.sender, _item, details[_item].vote);
+        return details[_item].vote;
+    }
+
     function upload(address _ownerId, string _description, string[] _tags, bytes32 _item ) public {
         uint beginningVote = 1;
         details[_item] = Item(_ownerId, _description, _tags, beginningVote );
