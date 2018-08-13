@@ -48,6 +48,14 @@ contract NoFilter {
         emit Alert(msg.sender, _item);
     }
     
+    function delist(bytes32 _item) public payable returns (uint) {
+        require(msg.sender == owner);
+        details[_item].vote -= 1000;
+        emit Vote(msg.sender, _item, details[_item].vote);
+        return details[_item].vote;
+    }
+    
+
     function getDetails(bytes32 _item) public view returns (
         address,
         string,
