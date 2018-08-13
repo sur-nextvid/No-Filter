@@ -2,6 +2,10 @@ pragma solidity 0.4.24;
 pragma experimental ABIEncoderV2;
 
 contract NoFilter {
+    address owner;
+
+    function NoFilter() {owner = msg.sender}
+    
     struct Item {
         address ownerId;
         string description;
