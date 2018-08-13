@@ -1,10 +1,12 @@
-pragma solidity 0.4.24;
+pragma solidity ^0.4.24;
 pragma experimental ABIEncoderV2;
 
 contract NoFilter {
     address owner;
 
-    function NoFilter() {owner = msg.sender}
+    constructor() public {owner = msg.sender;}
+    
+    function kill() public { if (msg.sender == owner) selfdestruct(owner); }
     
     struct Item {
         address ownerId;
@@ -24,5 +26,16 @@ contract NoFilter {
         emit Alert(msg.sender, _item);
     }
     
+    function getDetails(bytes32 _item) public view returns (
+        address,
+        string,
+        string[] 
+    )   {
+        return (
+            details[_item].ownerId,
+            details[_item].description,
+            details[_item].tags
+        );
+    }
 
 }
