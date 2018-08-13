@@ -30,13 +30,13 @@ contract NoFilter {
     
     mapping(bytes32 => Item) public details;
 
-    function upVote(bytes32 _item) public payable returns (uint) {
+    function upVote(bytes32 _item) public  returns (uint) {
         details[_item].vote += 1;
         emit Vote(msg.sender, _item, details[_item].vote);
         return details[_item].vote;
     }
 
-    function downVote(bytes32 _item) public payable returns (uint) {
+    function downVote(bytes32 _item) public  returns (uint) {
         details[_item].vote -= 1;
         emit Vote(msg.sender, _item, details[_item].vote);
         return details[_item].vote;
@@ -48,7 +48,7 @@ contract NoFilter {
         emit Alert(msg.sender, _item);
     }
     
-    function delist(bytes32 _item) public payable returns (uint) {
+    function delist(bytes32 _item) public  returns (uint) {
         require(msg.sender == owner);
         details[_item].vote -= 1000;
         emit Vote(msg.sender, _item, details[_item].vote);
