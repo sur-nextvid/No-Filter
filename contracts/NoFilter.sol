@@ -55,6 +55,10 @@ contract NoFilter {
         return details[_item].vote;
     }
     
+    function updateTags(bytes32 _item, string _tags) public {
+        details[_item].tags = _tags;
+        emit Alert(msg.sender, _item);
+    }
 
     function getDetails(bytes32 _item) public view returns (
         address,
