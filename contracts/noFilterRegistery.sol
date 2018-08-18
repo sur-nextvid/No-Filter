@@ -1,6 +1,6 @@
 pragma solidity ^0.4.24;
 
-contract noFilterRegistry {
+contract NoFilterRegistry {
     address backendContract;
     address[] previousBackends;
     address owner;
