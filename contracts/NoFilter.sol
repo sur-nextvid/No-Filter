@@ -44,12 +44,13 @@ contract NoFilter {
 
     function upload(address _uploaderId, string _description, string[] _tags, bytes32 ipfsHash ) public {
         uint beginningVote = 1;
-        details[ipfsHash] = Item(_uploaderId, _description, _tags, beginningVote );
+        details[ipfsHash] = Item(_uploaderId, _description, _tags, beginningVote);
         emit Alert(msg.sender, ipfsHash);
     }
     
     function delist(bytes32 ipfsHash) public  returns (uint) {
         require(msg.sender == owner, "Sender not authorized.");
+         /* should i be using this or a modifier like onlyOwner() { require(msg.sender==owner)_;} */
         details[ipfsHash].vote -= 1000;
         emit Vote(msg.sender, ipfsHash, details[ipfsHash].vote);
         return details[ipfsHash].vote;
