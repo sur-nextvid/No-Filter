@@ -8,8 +8,8 @@ contract NoFilter {
     
     function kill() public { if (msg.sender == owner) selfdestruct(owner); }
     
-    struct Item {
-        address ownerId;
+    struct File {
+        address uploaderId;
         string description;
         string[] tags;
         uint vote;
@@ -19,57 +19,58 @@ contract NoFilter {
     
     event Vote(
       address voter,        
-      bytes32 indexed _item,
+      bytes32 indexed ipfsHash,
       uint vote
     );
     
     event Alert(
-        address indexed ownerId,
-        bytes32 indexed _item
+        address indexed uploaderId,
+        bytes32 indexed ipfsHash
     );
     
-    mapping(bytes32 => Item) public details;
+    mapping(bytes32 => File) public details;
 
-    function upVote(bytes32 _item) public  returns (uint) {
-        details[_item].vote += 1;
-        emit Vote(msg.sender, _item, details[_item].vote);
-        return details[_item].vote;
+    function upVote(bytes32 ipfsHash) public  returns (uint) {
+        details[ipfsHash].vote += 1;
+        emit Vote(msg.sender, ipfsHash, details[ipfsHash].vote);
+        return details[ipfsHash].vote;
     }
 
-    function downVote(bytes32 _item) public  returns (uint) {
-        details[_item].vote -= 1;
-        emit Vote(msg.sender, _item, details[_item].vote);
-        return details[_item].vote;
+    function downVote(bytes32 ipfsHash) public  returns (uint) {
+        details[ipfsHash].vote -= 1;
+        emit Vote(msg.sender, ipfsHash, details[ipfsHash].vote);
+        return details[ipfsHash].vote;
     }
 
-    function upload(address _ownerId, string _description, string[] _tags, bytes32 _item ) public {
+    function upload(address _uploaderId, string _description, string[] _tags, bytes32 ipfsHash ) public {
         uint beginningVote = 1;
-        details[_item] = Item(_ownerId, _description, _tags, beginningVote );
-        emit Alert(msg.sender, _item);
+        details[ipfsHash] = Item(_uploaderId, _description, _tags, beginningVote );
+        emit Alert(msg.sender, ipfsHash);
     }
     
-    function delist(bytes32 _item) public  returns (uint) {
-        require(msg.sender == owner);
-        details[_item].vote -= 1000;
-        emit Vote(msg.sender, _item, details[_item].vote);
-        return details[_item].vote;
+    function delist(bytes32 ipfsHash) public  returns (uint) {
+        require(msg.sender == owner, "Sender not authorized.");
+        details[ipfsHash].vote -= 1000;
+        emit Vote(msg.sender, ipfsHash, details[ipfsHash].vote);
+        return details[ipfsHash].vote;
     }
     
-    function updateTags(bytes32 _item, string _tags) public {
-        details[_item].tags = _tags;
-        emit Alert(msg.sender, _item);
+    function updateTags(bytes32 ipfsHash, string[] _tags) public {
+        //details[ipfsHash] = Item(details[ipfsHash].uploaderId, details[ipfsHash].description, _tags, details[ipfsHash].vote);
+        details[ipfsHash].tags = _tags;
+        emit Alert(msg.sender, ipfsHash);
     }
 
-    function getDetails(bytes32 _item) public view returns (
+    function getDetails(bytes32 ipfsHash) public view returns (
         address,
         string,
         string[],
         uint
     ) {
-       return (details[_item].ownerId,
-        details[_item].description,
-        details[_item].tags,
-        details[_item].vote);
+        return (details[ipfsHash].uploaderId,
+            details[ipfsHash].description,
+            details[ipfsHash].tags,
+            details[ipfsHash].vote);
     }
-    function() public payable { };
+    function() public payable { }
 }
