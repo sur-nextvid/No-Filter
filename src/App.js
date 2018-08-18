@@ -7,6 +7,12 @@ import "./css/open-sans.css";
 import "./css/pure-min.css";
 import "./App.css";
 
+/*
+have to build ipfshash utility 
+reference: https://ethereum.stackexchange.com/questions/17094/how-to-store-ipfs-hash-using-bytes?rq=1
+
+*/
+
 class App extends Component {
   constructor(props) {
     super(props);
