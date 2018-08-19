@@ -2,7 +2,7 @@ pragma solidity ^0.4.24;
 pragma experimental ABIEncoderV2;
 
 contract NoFilter {
-    address owner;
+    address public owner;
 
     constructor() public {owner = msg.sender;}
     

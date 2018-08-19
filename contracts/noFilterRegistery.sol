@@ -3,7 +3,7 @@ pragma solidity ^0.4.24;
 contract NoFilterRegistry {
     address backendContract;
     address[] previousBackends;
-    address owner;
+    address public owner;
 
     constructor() public {
         owner = msg.sender;
