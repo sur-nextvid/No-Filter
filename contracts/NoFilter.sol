@@ -44,7 +44,9 @@ contract NoFilter {
 
     function upload(address _uploaderId, string _description, string[] _tags, bytes32 ipfsHash ) public {
         uint beginningVote = 1;
-        details[ipfsHash] = Item(_uploaderId, _description, _tags, beginningVote);
+        details[ipfsHash] = File(_uploaderId, _description, _tags, beginningVote);
+        // Item memory item = Item(_uploaderId, _description, _tags, beginningVote);
+        // details[ipfsHash] = item;
         emit Alert(msg.sender, ipfsHash);
     }
     
