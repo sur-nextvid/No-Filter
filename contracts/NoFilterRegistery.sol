@@ -1,15 +1,21 @@
 pragma solidity ^0.4.24;
 
 contract NoFilterRegistry {
-    address backendContract;
-    address[] previousBackends;
+    address public backendContract;
+    address[] public previousBackends;
     address public owner;
 
     constructor() public {
         owner = msg.sender;
     }
 
-  
+    function previousBackendsLength() public view returns(uint){
+        return previousBackends.length;
+    }
+
+    function getBackendContract() public view returns(address){
+        return backendContract;
+    }
 
     function changeBackend(address newBackend) public
     returns (bool)

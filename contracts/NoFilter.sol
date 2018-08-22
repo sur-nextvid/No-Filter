@@ -6,7 +6,9 @@ contract NoFilter {
 
     constructor() public {owner = msg.sender;}
     
-    function kill() public { if (msg.sender == owner) selfdestruct(owner); }
+    function kill() public {
+        if (msg.sender == owner) selfdestruct(owner); //use require instead of this
+    }
     
     struct File {
         address uploaderId;
@@ -17,11 +19,7 @@ contract NoFilter {
     
     
     
-    event Vote(
-      address voter,        
-      bytes32 indexed ipfsHash,
-      uint vote
-    );
+    event Vote(address voter, bytes32 indexed ipfsHash, uint vote); //make all one liners for events
     
     event Alert(
         address indexed uploaderId,
