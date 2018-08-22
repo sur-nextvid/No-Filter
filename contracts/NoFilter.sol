@@ -15,36 +15,36 @@ contract NoFilter {
         address uploaderId;
         string description;
         string[] tags;
-        uint vote;
+        int vote;
     }
     
     
     
-    event Vote(address voter, bytes32 indexed ipfsHash, uint vote); 
+    event Vote(address voter, bytes32 indexed ipfsHash, int vote); 
     
     event Alert(address indexed uploaderId, bytes32 indexed ipfsHash);
     
     mapping(bytes32 => File) public details;
 
-    function upVote(bytes32 ipfsHash) public  returns (uint) {
+    function upVote(bytes32 ipfsHash) public  returns (int) {
         details[ipfsHash].vote += 1;
         emit Vote(msg.sender, ipfsHash, details[ipfsHash].vote);
         return details[ipfsHash].vote;
     }
 
-    function downVote(bytes32 ipfsHash) public  returns (uint) {
+    function downVote(bytes32 ipfsHash) public  returns (int) {
         details[ipfsHash].vote -= 1;
         emit Vote(msg.sender, ipfsHash, details[ipfsHash].vote);
         return details[ipfsHash].vote;
     }
 
     function upload(address _uploaderId, string _description, string[] _tags, bytes32 ipfsHash ) public {
-        uint beginningVote = 1;
+        int beginningVote = 1;
         details[ipfsHash] = File(_uploaderId, _description, _tags, beginningVote);
         emit Alert(msg.sender, ipfsHash);
     }
     
-    function delist(bytes32 ipfsHash) public  returns (uint) {
+    function delist(bytes32 ipfsHash) public  returns (int) {
         require(msg.sender == owner, "Sender not authorized.");
        
         details[ipfsHash].vote -= 1000;
@@ -62,7 +62,7 @@ contract NoFilter {
         address,
         string,
         string[],
-        uint
+        int
     ) {
         return (details[ipfsHash].uploaderId,
             details[ipfsHash].description,
