@@ -42,4 +42,11 @@ contract("NoFilterRegistry Tests", async accounts => {
       return utils.ensureException(e);
     }
   });
+
+  it("should return length of previousBackend array", async () => {
+    let expected = 1;
+
+    await contractInstance.changeBackend(contract_two);
+    assert.equal(await contractInstance.previousBackendsLength(), expected);
+  });
 });
