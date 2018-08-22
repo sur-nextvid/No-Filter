@@ -2,7 +2,6 @@ const { expect, assert } = require("chai");
 const NoFilterRegistry = artifacts.require("NoFilterRegistry");
 const utils = require("./helpers/Utils");
 
-const ADDRESS = "0x627306090abab3a6e1400e9345bc60c78a8bef57";
 let contract_two = 0x439bbb468fa1102398dca52fb9a4cb5e97a07be1;
 
 let contractInstance = null;
@@ -14,7 +13,7 @@ beforeEach(async () => {
 contract("NoFilterRegistry Tests", async accounts => {
   it("contract should be owned by the correct address", async () => {
     let owner = await contractInstance.owner.call();
-    expect(owner.valueOf()).to.equal(ADDRESS);
+    expect(owner.valueOf()).to.equal(accounts[0]);
   });
 
   it("should update backend contract address", async () => {
@@ -38,9 +37,7 @@ contract("NoFilterRegistry Tests", async accounts => {
         from: accounts[2]
       });
       assert(false, "Calling from an address other than the owner should fail");
-    } catch (e) {
-      return utils.ensureException(e);
-    }
+    } catch (e) {}
   });
 
   it("should return length of previousBackend array", async () => {
