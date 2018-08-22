@@ -32,7 +32,7 @@ contract("NoFilter Tests", async accounts => {
 
   it("will decrease the vote on file by one", async () => {});
 
-  it("delist file", async () => {});
+  it("will delist file by ", async () => {});
 
   it("updates tags", async () => {});
 
