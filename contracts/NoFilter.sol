@@ -1,5 +1,4 @@
 pragma solidity ^0.4.24;
-pragma experimental ABIEncoderV2;
 
 contract NoFilter {
     address public owner;
@@ -15,7 +14,6 @@ contract NoFilter {
     struct File {
         address uploaderId;
         string description;
-        bytes20[10] tags;
         int vote;
     }
     
@@ -39,9 +37,11 @@ contract NoFilter {
         return details[ipfsHash].vote;
     }
 
-    function upload(address _uploaderId, string _description, bytes20[10] _tags, bytes32 ipfsHash ) public {
+    function upload(address _uploaderId, string _description, bytes32 ipfsHash ) public {
         int beginningVote = 1;
-        details[ipfsHash] = File(_uploaderId, _description, _tags, beginningVote);
+        File memory newFile = File(_uploaderId, _description, beginningVote);
+
+        details[ipfsHash] = newFile;
         emit Alert(msg.sender, ipfsHash);
     }
     
@@ -52,23 +52,14 @@ contract NoFilter {
         emit Vote(msg.sender, ipfsHash, details[ipfsHash].vote);
         return details[ipfsHash].vote;
     }
-    
-    function updateTags(bytes32 ipfsHash, bytes20[10] _tags) public returns (bytes20[10]){
-        
-        details[ipfsHash].tags = _tags;
-        emit Alert(msg.sender, ipfsHash);
-        return details[ipfsHash].tags;
-    }
 
     function getDetails(bytes32 ipfsHash) public view returns (
         address,
         string,
-        bytes20[10],
         int
     ) {
         return (details[ipfsHash].uploaderId,
             details[ipfsHash].description,
-            details[ipfsHash].tags,
             details[ipfsHash].vote);
     }
     function() public payable { }

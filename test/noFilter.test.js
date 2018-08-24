@@ -17,24 +17,12 @@ contract("NoFilter Tests", async accounts => {
   });
 
   it("will increase vote on file by one", async () => {
-    let expected = 1;
+    let expected = 2;
     let ipfshash = "Qmbz5g7houBH89C47NGWemErjyi2RgupEjk1q1hTcXVY8U";
     let bytes32 = await getBytes32FromMultiash(ipfshash);
     await contractInstance.upload(
       accounts[2],
       "this is a desc",
-      [
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken"
-      ],
       bytes32.digest
     );
 
@@ -43,24 +31,12 @@ contract("NoFilter Tests", async accounts => {
   });
 
   it("will decrease the vote on file by one", async () => {
-    let expected = -1;
+    let expected = 0;
     let ipfshash = "Qmbz5g7houBH89C47NGWemErjyi2RgupEjk1q1hTcXVY8U";
     let bytes32 = await getBytes32FromMultiash(ipfshash);
     await contractInstance.upload(
       accounts[2],
       "this is a desc",
-      [
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken"
-      ],
       bytes32.digest
     );
 
@@ -70,24 +46,12 @@ contract("NoFilter Tests", async accounts => {
   });
 
   it("will delist file by ", async () => {
-    let expected = -1000;
+    let expected = -999;
     let ipfshash = "Qmbz5g7houBH89C47NGWemErjyi2RgupEjk1q1hTcXVY8U";
     let bytes32 = await getBytes32FromMultiash(ipfshash);
     await contractInstance.upload(
       accounts[2],
       "this is a desc",
-      [
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken"
-      ],
       bytes32.digest
     );
 
@@ -96,56 +60,19 @@ contract("NoFilter Tests", async accounts => {
     assert.equal(delist, expected);
   });
 
-  it("updates tags", async () => {
+  it("returns details of file", async () => {
     let ipfshash = "Qmbz5g7houBH89C47NGWemErjyi2RgupEjk1q1hTcXVY8U";
     let bytes32 = await getBytes32FromMultiash(ipfshash);
+
     await contractInstance.upload(
       accounts[2],
       "this is a desc",
-      [
-        "0x",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0xchicken",
-        "0x",
-        "0x",
-        "0xrooster",
-        "0x"
-      ],
       bytes32.digest
     );
 
-    let expected = [
-      "0xchicken",
-      "0xchicken",
-      "0xchicken",
-      "0xchicken",
-      "0xchicken",
-      "0xchicken",
-      "0xchicken",
-      "0xchicken",
-      "0xchicken",
-      "0xchicken"
-    ];
-
-    let updateTags = await contractInstance.updateTags.call(bytes32.digest, [
-      "0xrooster",
-      "0xchicken",
-      "0xchicken",
-      "0xchicken",
-      "0xchicken",
-      "0xchicken",
-      "0xchicken",
-      "0xchicken",
-      "0xchicken",
-      "0xchicken"
-    ]);
-    console.log(updateTags);
-    console.log(expected);
-    assert.equal(updateTags, expected);
+    let getDetails = await contractInstance.getDetails.call(bytes32.digest);
+    assert.equal(getDetails[0], accounts[2]);
+    assert.equal(getDetails[1], "this is a desc");
+    assert.equal(getDetails[2], 1);
   });
-
-  it("returns details of file", async () => {});
 });
