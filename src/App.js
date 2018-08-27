@@ -6,6 +6,8 @@ import "./css/open-sans.css";
 import "./css/pure-min.css";
 import "./App.css";
 
+import noFilter from './noFilter'
+
 class App extends Component {
     // this.state = {
       
@@ -17,7 +19,6 @@ class App extends Component {
   }
 
   
-    let user = web3.eth.getAccounts();
 
   render() {
     return (
