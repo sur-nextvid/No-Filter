@@ -14,13 +14,13 @@ contract NoFilter {
         int vote;
     }
      
-    /** event emmitted when a user up votes ot down votes a file. Vote count can be used to filter front end results. */ 
+    /** @dev event emmitted when a user up votes ot down votes a file. Vote count can be used to filter front end results. */ 
     event Vote(address voter, bytes32 indexed ipfsHash, int vote); 
     
-    /** event emmitted when a file is uploaded to ipfs */
+    /** @dev event emmitted when a file is uploaded to ipfs */
     event Alert(address indexed uploaderId, bytes32 indexed ipfsHash);
     
-    /** mapping between ipfs hashes and File struct  */
+    /** @dev mapping between ipfs hashes and File struct  */
     mapping(bytes32 => File) public details;
 
     /**
@@ -73,7 +73,7 @@ contract NoFilter {
     
     /** 
     * @dev returns the details of a uploaded file from the mapping
-    * @param ipfshash bytes32 
+    * @param ipfsHash bytes32 
     * @return details[ipfsHash].uploaderId address, details[ipfsHash].description String, details[ipfsHash].vote int
     */
     function getDetails(bytes32 ipfsHash) public view returns (
@@ -85,9 +85,10 @@ contract NoFilter {
             details[ipfsHash].description,
             details[ipfsHash].vote);
     }
-    
+
     /**
-    * @dev suicide function only callable by owner. Use this to disable a contract and then call the update function on NoFilterRegistry.sol with a new 
+    * @dev this is the emergency stop function--suicide function only callable by owner. 
+    *Use this to disable a contract and then call the update function on NoFilterRegistry.sol with a new 
     * contract address to point the front end at. USE WITH EXTREME CAUTION!!!
     */
     function kill() public {
@@ -95,6 +96,6 @@ contract NoFilter {
         selfdestruct(owner);
     }
 
-    /** Fallback function to be used as a catchall if an unrecognized function is called */
+    /** @dev this is a Fallback function to be used as a catchall if an unrecognized function is called */
     function() public payable { }
 }

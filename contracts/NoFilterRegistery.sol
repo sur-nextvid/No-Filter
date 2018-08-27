@@ -1,10 +1,13 @@
 pragma solidity ^0.4.24;
 
+import 'openzeppelin-solidity/contracts/ownership/Ownable.sol';
+
+
 /**
 *   @title Registry Contract for NoFilter DApp
  */
 
-contract NoFilterRegistry {
+contract NoFilterRegistry is Ownable {
 
     /**  variables for contract storage */
 
@@ -46,7 +49,7 @@ contract NoFilterRegistry {
     * @param newBackend address
     * @return bool confirming success of update
      */
-    function changeBackend(address newBackend) public
+    function changeBackend(address newBackend) public onlyOwner
     returns (bool)
     {
         require(msg.sender == owner, "Sender not authorized.");
