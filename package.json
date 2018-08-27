@@ -52,8 +52,15 @@
     "bs58": "^4.0.1",
     "chai": "^4.1.2",
     "dotenv": "^2.0.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "bootstrap": "^3.3.7",
+    "fs-extra": "^5.0.0",
+    "ipfs-api": "^18.1.1",
+    "react": "^16.2.0",
+    "react-bootstrap": "^0.32.1",
+    "react-dom": "^16.2.0",
+    "react-dropzone": "^4.2.8",
+    "react-scripts": "1.1.0",
+    "web3": "^1.0.0-beta.26"
   },
   "scripts": {
     "start": "node scripts/start.js",
