@@ -6,15 +6,15 @@ pragma solidity ^0.4.24;
 
 contract NoFilterRegistry {
 
-    // variables for contract storage
+    /**  variables for contract storage */
 
-    // Current NoFilter Contract
+    /** Current NoFilter Contract */
     address public backendContract;
 
-    // An array of previous contract addresses
+    /** An array of previous contract addresses */
     address[] public previousBackends;
 
-    // Contract Owner
+    /** Contract Owner */
     address public owner;
 
 
@@ -32,6 +32,7 @@ contract NoFilterRegistry {
     function previousBackendsLength() public view returns(uint){
         return previousBackends.length;
     }
+
     /**
     * @dev Gets the current NoFilter address
     * @return address of NoFilter contract
@@ -39,6 +40,7 @@ contract NoFilterRegistry {
     function getBackendContract() public view returns(address){
         return backendContract;
     }
+
     /**
     * @dev updates the current NoFilter address and saves the old one to the array
     * @param newBackend address
