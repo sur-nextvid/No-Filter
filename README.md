@@ -13,7 +13,9 @@ NoFilter is a censorship resistant sharing tool which uses IPFS and the Ethereum
 1. Clone the repo, move into the directory and install the node packages.
 
    git clone https://github.com/yshuman1/No-Filter
+   
    cd No-Filter
+   
    npm install
 
 2. Install Truffle
