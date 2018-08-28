@@ -2,7 +2,7 @@
 
 ## URL
 
-https://nofilter.info
+https://nofilter.info (coming soon)
 
 ## What Does No Filter Do?
 
