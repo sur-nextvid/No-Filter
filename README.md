@@ -36,7 +36,7 @@ NoFilter is a censorship resistant sharing tool which uses IPFS and the Ethereum
 
 6) Migrate the contracts
 
-   migrate
+   migrate --reset --network rinkeby
 
 7) Start the front end
 
