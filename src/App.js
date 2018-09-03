@@ -5,12 +5,14 @@ import ipfs from "./ipfs";
 import "./App.css";
 import web3 from "./web3";
 import noFilter from "./noFilter";
+//import noFilterRegistry from "./noFilterRegistry";
 import multihash from "./utils/multihash";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      mainContractAddress: "",
       owner: "",
       description: "",
       ipfsHash: null,
@@ -85,6 +87,26 @@ class App extends Component {
     });
   };
 
+//  backend= async () => {
+
+//      await noFilterRegistry.methods.changeBackend(
+//       0x11762bb2c5d76312b51fd396ec947cd752e51343
+//     );
+//     await console.log(
+//       "the address should be 0x11762bb2c5d76312b51fd396ec947cd752e51343"
+//     );
+
+//     await noFilterRegistry.methods.changeBackend(
+//       0xae0686beeae8a0846017232a6fed0e4ed6221e85
+//     );
+//     const mainContractAddress =  await noFilterRegistry.methods
+//       .getBackendContract()
+//       .call();
+
+//     this.setState({ mainContractAddress });
+//   }
+
+
   saveFile = () => {
     console.log("about to upload");
 
@@ -94,9 +116,10 @@ class App extends Component {
         console.log(transactionHash);
         this.setState({ transactionHash });
       });
+     // backend();
     console.log("done");
   };
-
+  
   async componentDidMount() {
     const owner = await noFilter.methods.owner().call();
 
@@ -106,21 +129,25 @@ class App extends Component {
     let user = accounts[0];
     this.setState({ user });
 
+    
+
     const ethAddress = await noFilter.options.address;
     this.setState({ ethAddress });
   }
 
   render() {
-    return <div className="App">
+    return (
+      <div className="App">
         <hr />
         <h1>No Filter</h1>
         <p>V. 0.3.0</p>
-        <p><a href="https://github.com/yshuman1/No-Filter">Source Code</a>
+        <p>
+          <a href="https://github.com/yshuman1/No-Filter">Source Code</a>
         </p>
         <p>
-        <a href="https://rinkeby.etherscan.io/address/0x11762bb2c5d76312b51fd396ec947cd752e51343">
-          Main Contract
-        </a>
+          <a href="https://rinkeby.etherscan.io/address/0x11762bb2c5d76312b51fd396ec947cd752e51343">
+            Main Contract
+          </a>
         </p>
         <a href="https://rinkeby.etherscan.io/address/0x11762bb2c5d76312b51fd396ec947cd752e51343">
           Registry Contract
@@ -137,8 +164,8 @@ class App extends Component {
           exposes.
         </p>
         <p>
-          Features available on the contract but not implemented on the
-          front end include:
+          Features available on the contract but not implemented on the front
+          end include:
         </p>
         <ul>
           <li>Voting on files</li>
@@ -148,20 +175,24 @@ class App extends Component {
           </li>
           <li>Owner specific controls</li>
           <li>
-            The ability to filter files so as to prevent illegal content
-            from being displayed on your front end
+            The ability to filter files so as to prevent illegal content from
+            being displayed on your front end
           </li>
           <li>
-            The ability for a user to look up files by user address as well
-            as by IPFS hash and description
+            The ability for a user to look up files by user address as well as
+            by IPFS hash and description
           </li>
           <li>
-            This contracts not only fires events off when a file is uploaded
-            or voted on but also maintains a mapping of file details. In the
-            future we plan on making all files searchable as well.
+            This contracts not only fires events off when a file is uploaded or
+            voted on but also maintains a mapping of file details. In the future
+            we plan on making all files searchable as well.
           </li>
         </ul>
-        <p> I hope you like it so far! If you have any questions, suggestions or problems email me: email [at] yasin.io </p>
+        <p>
+          {" "}
+          I hope you like it so far! If you have any questions, suggestions or
+          problems email me: email [at] yasin.io{" "}
+        </p>
         <hr />
         <Grid>
           <h1>Step 1</h1>
@@ -175,25 +206,25 @@ class App extends Component {
           </Form>
 
           <p>
-            Once Your IPFS Hash is displayed here, proceed to Step 2 (may
-            take a minute): {this.state.ipfsHash}
+            Once Your IPFS Hash is displayed here, proceed to Step 2 (may take a
+            minute): {this.state.ipfsHash}
           </p>
           <hr />
           <h1>Step 2</h1>
           <p>Type in a description of your file (mandatory):</p>
-          <input type="text" placeholder="description" value={this.state.description} onChange={this.handleChange} />
+          <input
+            type="text"
+            placeholder="description"
+            value={this.state.description}
+            onChange={this.handleChange}
+          />
           <Button bsStyle="primary" type="button" onClick={this.saveFile}>
             Save To Ethereum
           </Button>
         </Grid>
         <h1>Step 3</h1>
-        <p>
-          Press the button below to retireve all your transactions details.
-        </p>
-        <Button onClick={this.updateTable}>
-          {" "}
-          Get Transaction Receipt{" "}
-        </Button>
+        <p>Press the button below to retireve all your transactions details.</p>
+        <Button onClick={this.updateTable}> Get Transaction Receipt </Button>
         <Table bordered responsive>
           <thead>
             <tr>
@@ -223,6 +254,7 @@ class App extends Component {
               <td>Ethereum Contract Address</td>
               <td>{this.state.ethAddress}</td>
             </tr>
+
             <tr>
               <td>Ethereum Contract Owner Address</td>
               <td>{this.state.owner}</td>
@@ -241,9 +273,14 @@ class App extends Component {
               <td>Gas Used</td>
               <td>{this.state.gasUsed}</td>
             </tr>
+            {/* <tr>
+              <td>testing this shit</td>
+              <td>{this.state.mainContractAddress}</td>
+            </tr> */}
           </tbody>
         </Table>
       </div>
+    );
   }
 }
 
